@@ -1,4 +1,4 @@
-langchain==0.0.229
 guidance==0.0.64
 numpy==1.25.1
-pypdf2==3.0.1
+rank_bm25==0.2.2
+weaviate-client==3.22.1

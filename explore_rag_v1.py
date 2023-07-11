@@ -49,6 +49,23 @@ pprint(rag("what is the main goal of the paper?"))
   14.397660909761523)]
 """
 
+
+pprint("#####")
+pprint(rag("what's the key findings of the paper?"))
+"""
+[('Below is part of the InstuctGPT paper. Could you read and summarize it to '
+  'me?',
+  18.415021371669887),
+ ('What is the sum of average daily meat consumption for Georgia and Western '
+  'Asia? Provide a step-by-step reasoning before providing your answer.',
+  14.911014094212106),
+ ('JWT Secret Hardcoded: The JWT secret key is hardcoded in the '
+  "``loginHandler'' function, which is not a good practice. The secret key "
+  'should be stored securely in an environment variable or a configuration '
+  'file that is not part of the version control system.4.',
+  14.233930972800035)]
+"""
+
 """
 What problems do you notice ...? 
 """
