@@ -1,14 +1,12 @@
 
 
-class RagVer3: 
+class RagVer4: 
     """
     improving the retriever 🔎:
-    semantic search with Approximate Neartest Neighbour (ANN) search
-    References:
-    - Vector Indexing (Weaviate, 2023): https://weaviate.io/developers/weaviate/concepts/vector-index
-    - Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs (Malkov & Yashunin, 2018): https://arxiv.org/abs/1603.09320
-    - text2vec-openai (Weaviate, 2023): https://weaviate.io/developers/weaviate/modules/retriever-vectorizer-modules/text2vec-openai
-    - (Batch) Import items (Weaviate, 2023): https://weaviate.io/developers/weaviate/manage-data/import
+    hybrid search (BM25F + semantic search / with reciprocal ranking fusion)
+    references:
+    - Hybrid Search Explained (Weaviate, 2023): https://weaviate.io/blog/hybrid-search-explained
+    - Risk-Reward Trade-offs in Rank Fusion (Benham & Culpepper, 2017): https://rodgerbenham.github.io/bc17-adcs.pdf
     """
     
     def __init__(self):
