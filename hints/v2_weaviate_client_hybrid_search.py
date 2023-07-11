@@ -123,18 +123,35 @@ first 10 dimensions:
 
 # --- search over vectors semantically --- #
 r = (
-   client.query
-   .get("Sentence", ['content'])
-   .with_near_text({'concepts': "what is the main goal of the paper?"})
-   .with_limit(3)
-   .with_additional(["distance"])
-   .do()
+    client.query
+    .get("Sentence", ["content"])
+    # it is just this part that you need fixing
+    .with_hybrid(
+        query="what is the main goal of the paper?"
+    )
+    .with_additional(["score", "explainScore"])
+    .with_limit(3)
+    .do()
 )
+
 from pprint import pprint
 pprint(r)
 
 """
-{'data': {'Get': {'Sentence': [{'_additional': {'distance': 0.22370195},
+{'data': {'Get': {'Sentence': [{'_additional': {'explainScore': '(bm25)\n'
+                                                                '(hybrid) '
+                                                                'Document '
+                                                                '77ccec80-786c-43b8-a5cc-43671af3c3e6 '
+                                                                'contributed '
+                                                                '0.003968253968253968 '
+                                                                'to the score\n'
+                                                                '(hybrid) '
+                                                                'Document '
+                                                                '77ccec80-786c-43b8-a5cc-43671af3c3e6 '
+                                                                'contributed '
+                                                                '0.012295081967213115 '
+                                                                'to the score',
+                                                'score': '0.016263336'},
                                 'content': 'Such models are an important area '
                                            'of study as they have the '
                                            'potential to be used in a wide '
@@ -151,7 +168,20 @@ pprint(r)
                                            'language text, particularly in '
                                            'more complex and nuanced '
                                            'scenarios.'},
-                               {'_additional': {'distance': 0.22996348},
+                               {'_additional': {'explainScore': '(bm25)\n'
+                                                                '(hybrid) '
+                                                                'Document '
+                                                                '08f8880a-443d-4233-8f55-90fa6b1b8637 '
+                                                                'contributed '
+                                                                '0.004032258064516129 '
+                                                                'to the score\n'
+                                                                '(hybrid) '
+                                                                'Document '
+                                                                '08f8880a-443d-4233-8f55-90fa6b1b8637 '
+                                                                'contributed '
+                                                                '0.012096774193548387 '
+                                                                'to the score',
+                                                'score': '0.016129032'},
                                 'content': 'As such, they have been the '
                                            'subject of substantial interest '
                                            'and progress in recent years '
@@ -166,7 +196,20 @@ pprint(r)
                                            'GPT-4 was evaluated on a variety '
                                            'of exams originally designed for '
                                            'humans.'},
-                               {'_additional': {'distance': 0.27174616},
+                               {'_additional': {'explainScore': '(bm25)\n'
+                                                                '(hybrid) '
+                                                                'Document '
+                                                                '9ea82793-8cd5-4764-a894-67aab44a1205 '
+                                                                'contributed '
+                                                                '0.004098360655737705 '
+                                                                'to the score\n'
+                                                                '(hybrid) '
+                                                                'Document '
+                                                                '9ea82793-8cd5-4764-a894-67aab44a1205 '
+                                                                'contributed '
+                                                                '0.011904761904761904 '
+                                                                'to the score',
+                                                'score': '0.016003123'},
                                 'content': 'Predictions on the other ﬁve '
                                            'buckets performed almost as well, '
                                            'the main exception being GPT-4 '
