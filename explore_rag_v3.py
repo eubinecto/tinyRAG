@@ -1,9 +1,7 @@
-from rag101.rag_v3 import RAGVer3
+from tinyrag.rag_v3 import RAGVer3
 from pprint import pprint
 from dotenv import load_dotenv
 load_dotenv()
-
-
 rag = RAGVer3()
 
 

@@ -1,9 +1,8 @@
-from rag101.rag_v5 import RAGVer5
-from pprint import pprint
+from tinyrag.rag_v5 import RAGVer5
 from dotenv import load_dotenv
 load_dotenv()
-rag = RAGVer5()
 
+rag = RAGVer5()
 
 answer = rag("What was the main objective of the paper?", alpha=0.6)
 print(answer)
@@ -36,7 +35,7 @@ The authors tested GPT-4 by evaluating its performance on a diverse set of bench
 """
 
 print("######")
-answer = rag("In what ways GPT4 is limited by?", alpha=0.6)
+answer = rag("In what ways is GPT4 limited by?", alpha=0.6)
 print(answer)
 """
 GPT-4 is limited in several ways, as mentioned in the paper "GPT-4 Technical Report" [1][2][3]. Despite its capabilities, GPT-4 still suffers from limitations similar to earlier GPT models. One major limitation is its lack of full reliability, as it may "hallucinate" facts and make reasoning errors [1]. Additionally, GPT-4 has a limited context window, which restricts its understanding and processing of larger bodies of text [2]. These limitations pose significant and novel safety challenges, highlighting the need for extensive research in areas like bias, disinformation, over-reliance, privacy, cybersecurity, and proliferation [3].

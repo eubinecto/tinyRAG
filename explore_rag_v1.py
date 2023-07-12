@@ -1,4 +1,4 @@
-from rag101 import RAGVer1
+from tinyrag.rag_v1 import RAGVer1
 from pprint import pprint
 
 

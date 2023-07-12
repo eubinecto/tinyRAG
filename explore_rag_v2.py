@@ -1,4 +1,4 @@
-from rag101 import RAGVer2
+from tinyrag.rag_v2 import RAGVer2
 from pprint import pprint
 from dotenv import load_dotenv
 load_dotenv()
