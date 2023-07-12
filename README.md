@@ -1,6 +1,6 @@
 # tinyRAG
 
-A minimal implementation of a retriever-augmented generation (RAG) system. 
+A minimal & iterative implementation of a retriever-augmented generation (RAG) system. 
  
 ## What is this? 
 
