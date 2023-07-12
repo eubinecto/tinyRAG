@@ -141,7 +141,7 @@ example (not bad at semantic search):
 https://github.com/eubinecto/tinyRAG/blob/ece84fbf01e7f0368d61b1203623bd79e5fb3397/main_rag_v3.py#L47-L62
 
 
-## The Reader 📖
+## How it's made - The Reader 📖
 
 ### `RAGVer4` - generating answers with stuffing
 
