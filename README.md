@@ -1,7 +1,6 @@
 # tinyRAG
 
-A minimal implementation of a retriever-augmented generator (RAG) system. 
- 
+A minimal implementation of a retriever-augmented generation (RAG) system. 
  
 ## What is this? 
 
@@ -23,34 +22,51 @@ GPT-4 is limited in several ways, as mentioned in the paper "GPT-4 Technical Rep
 """
 ```
 
+It is my attempt to reverse-engineer popular RAG systems, e.g. Perplexity AI, Bing Chat, etc, in the most simple way possible. 
+
 
 ## The Retriever 🔎
 
 ### `RAGVer1` - searching for keywords with BM25 scoring
 
+```
+
+
+```
 
 
 
-### `RAGVer2` - searching for meaning with semantic search (Approximate Nearest Neighbour Search)
+### `RAGVer2` - searching for meaning with ANN (Approximate Nearest Neighbor)
+
+```
 
 
+```
 
-### `RAGVer3` - searching for both 
 
+### `RAGVer3` - brining the best of both worlds - hybrid search with RRF (Reciprocal Rank Fusion)
+
+```
+
+
+```
 
 
 ## The Reader 📖
 
 ### `RAGVer4` - generating answers with stuffing
 
+```
 
 
+```
 
 ### `RAGVer5` - moderating answers with Chain-of-Thought & guidance
 
+```
 
+```
 
-## How could we do this 
 
 
 

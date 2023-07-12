@@ -18,7 +18,7 @@ class RAGVer1:
     """
     
     def __init__(self):
-        self.elements = partition_pdf(filename=Path(__file__).resolve().parent.parent / "openai27052023.pdf", strategy="auto")
+        self.elements = partition_pdf(filename=Path(__file__).resolve().parent/ "openai27052023.pdf", strategy="auto")
         self.extract_sentences()
         self.extract_title()
         self.bm25 = BM25Okapi([[token.lemma_ for token in self.nlp(sent)] for sent in self.sentences])

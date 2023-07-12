@@ -34,7 +34,7 @@ class RAGVer2(RAGVer1):
     """
     
     def __init__(self):
-        self.elements = partition_pdf(filename=Path(__file__).resolve().parent.parent / "openai27052023.pdf", strategy="auto")
+        self.elements = partition_pdf(filename=Path(__file__).resolve().parent / "openai27052023.pdf", strategy="auto")
         self.extract_sentences()
         self.extract_title()
         # then ... import sentences into weaviate
