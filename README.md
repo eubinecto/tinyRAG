@@ -4,6 +4,12 @@ A minimal implementation of a retriever-augmented generation (RAG) system.
  
 ## What is this? 
 
+
+`tinyrag` answers any questions on *GPT Technical Report* (OpenAI, 2023) with in-text citations | 
+--- | 
+![image](https://github.com/eubinecto/tinyRAG/assets/56193069/94f2f915-8cb8-45e6-aeba-226c0bd44d55) | 
+
+like so:
 ```python
 from tinyrag.rag_v5 import RAGVer5
 from dotenv import load_dotenv
@@ -22,8 +28,8 @@ GPT-4 is limited in several ways, as mentioned in the paper "GPT-4 Technical Rep
 """
 ```
 
-It is my attempt to reverse-engineer RAG systems -- e.g. Perplexity AI, Bing Chat, etc -- in the most simple way possible. 
-
+It is my attempt to reverse-engineer RAG systems - e.g. Perplexity AI, Bing Chat, etc - in the simplest way possible. 
+Mostly to educate myself with the theoretical and technical aspects of RAG. 
 
 ## Quick Start 🚀
 
