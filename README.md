@@ -95,31 +95,61 @@ This suggests that while GPT-4 may demonstrate near-human intelligence in specif
 [3]. "We report the development of GPT-4, a large-scale, multimodal model which can accept image and text inputs and produce text outputs. While less capable than humans in many real-world scenarios, GPT-4 exhibits human-level performance on various professional and academic benchmarks, including passing a simulated bar exam with a score around the top 10% of test takers."
 ```
 
-## The Retriever 🔎
+## How it's made - the Retriever 🔎
 
 ### `RAGVer1` - searching for keywords with BM25 scoring
+relevant references: 
 - rank_bm25 - A Collection of BM25 Algorithms in Python (Dorianbrown): https://github.com/dorianbrown/rank_bm25
 - Improved Text Scoring with BM25 (Weber from Elastic, 2016) - https://velog.io/@mayhan/Elasticsearch-유사도-알고리즘
 
+exmaple output:
+
+
+
 ### `RAGVer2` - searching for meaning with ANN (Approximate Nearest Neighbor) 
+
+relevant references:
 - Vector Indexing (Weaviate, 2023): https://weaviate.io/developers/weaviate/concepts/vector-index
 - Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs (Malkov & Yashunin, 2018): https://arxiv.org/abs/1603.09320
 - text2vec-openai (Weaviate, 2023): https://weaviate.io/developers/weaviate/modules/retriever-vectorizer-modules/text2vec-openai
 - (Batch) Import items (Weaviate, 2023): https://weaviate.io/developers/weaviate/manage-data/import
 
+example output
+
 ### `RAGVer3` - brining the best of both worlds - hybrid search with RRF (Reciprocal Rank Fusion)
 
+relevant references:
 - reciprocal rank fusion (elastic, 2023) - https://www.elastic.co/guide/en/elasticsearch/reference/current/rrf.html
-- weaviate - hybrid search explained (weaviate, 2023) - https://weaviate.io/blog/hybrid-search-explained
+- weaviate - hybrid search explained (weaviate, 2023) - https://weaviate.io/blog/hybrid-search-explained 
+
+example output (good):
+https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v1.py#L8-L31
+
+example output (bad):
+https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v1.py#L33-L50
 
 ## The Reader 📖
 
 ### `RAGVer4` - generating answers with stuffing
 
+relevant literature:
 - weaviate - stuffing - https://weaviate.io/blog/combining-langchain-and-weaviate
 
+example output (good): 
+https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v2.py#L41-L58
+
+
+example output (bad): 
+https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v2.py#L9-L23
+
+
 ### `RAGVer5` - moderating answers with Chain-of-Thought & guidance
+
+relevant literature: 
 - Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (Wei et al., 2023) - https://arxiv.org/abs/2201.11903
 - A guidance language for controlling large language models (Microsoft, 2023) - https://github.com/microsoft/guidance
+
+example output: 
+
   
 
