@@ -25,51 +25,38 @@ GPT-4 is limited in several ways, as mentioned in the paper "GPT-4 Technical Rep
 It is my attempt to reverse-engineer popular RAG systems, e.g. Perplexity AI, Bing Chat, etc, in the most simple way possible. 
 
 
-## Quickstart 🚀
+## Quick Start 🚀
+
+
 
 
 ## The Retriever 🔎
 
 ### `RAGVer1` - searching for keywords with BM25 scoring
 
-```mermaid
-
-
-```
-
+...
 
 
 ### `RAGVer2` - searching for meaning with ANN (Approximate Nearest Neighbor)
 
-```memaid
-
-
-```
+...
 
 
 ### `RAGVer3` - brining the best of both worlds - hybrid search with RRF (Reciprocal Rank Fusion)
 
-```mermaid
-
-
-```
+...
 
 
 ## The Reader 📖
 
 ### `RAGVer4` - generating answers with stuffing
 
-```
 
-
-```
+...
 
 ### `RAGVer5` - moderating answers with Chain-of-Thought & guidance
 
-```
 
-```
-
-
+... 
 
 
