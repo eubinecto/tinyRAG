@@ -7,7 +7,7 @@ from rank_bm25 import BM25Okapi
 import numpy as np
 
 
-class RagVer1: 
+class RAGVer1: 
     """
     first attempt at the retriever 🔎:
     keyword search with BM25 scoring
@@ -18,10 +18,15 @@ class RagVer1:
     """
     
     def __init__(self):
+        self.elements = partition_pdf(filename=Path(__file__).resolve().parent.parent / "openai27052023.pdf", strategy="auto")
+        self.extract_sentences()
+        self.extract_title()
+        self.bm25 = BM25Okapi([[token.lemma_ for token in self.nlp(sent)] for sent in self.sentences])
+
+    def extract_sentences(self):
         # build dtm, upsert vectors, etc.
-        elements = partition_pdf(filename=Path(__file__).resolve().parent.parent / "openai27052023.pdf", strategy="auto")
         paragraphs = ""
-        for el in elements:
+        for el in self.elements:
             if isinstance(el, Title):
                 paragraphs += "<TITLE>"
             if isinstance(el, NarrativeText):
@@ -44,7 +49,11 @@ class RagVer1:
             for sentences in bigrams_by_paragraph
             for sent in sentences
         ]
-        self.bm25 = BM25Okapi([[token.lemma_ for token in self.nlp(sent)] for sent in self.sentences])
+
+    def extract_title(self):
+        title_element = [el for el in self.elements if isinstance(el, Title)][0]
+        self.title = str(title_element).strip()
+        
         
     def __call__(self, query: str, k: int = 3) -> list[tuple[str, float]]:
         tokens = [token.lemma_ for token in self.nlp(query)]

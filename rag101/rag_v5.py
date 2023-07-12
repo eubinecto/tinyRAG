@@ -1,18 +1,75 @@
 
+from .rag_v3 import RAGVer3
+import openai
+import guidance
 
-class RagVer5: 
+
+class RAGVer5(RAGVer3): 
     """
     improving the reader 📖:
-    Fact-checking with simple prompt (the approach used by nemoguardrails)
+    fact-check before you answer. 
+    using Chain-of-Thought with guidance (the approach used by nemoguardrails)
     references:
-    - Natural Language Inference (Papers with Code, 2022) - https://paperswithcode.com/task/natural-language-inference/latest
-    - example fact-checking prompt from NemoGuardrails (Nvidia, 2023) - https://github.com/NVIDIA/NeMo-Guardrails/blob/44f637e6bf8484e1c0109a3ff0f9a54844850267/nemoguardrails/llm/prompts/general.yml#L92-L94
-    - fact checking with prompt chaining (an indie hacker from Github): https://github.com/jagilley/fact-checker
-    """
-    
-    def __init__(self):
-        # build dtm, upsert vectors, etc.
-        pass
-    
-    def __call__(self, query: str) -> str:
-        pass
+    """ 
+
+    def __call__(self, query: str, alpha: float = 0.4, k: int = 3) -> str:
+        results: list[tuple[str, float]] = super().__call__(query, alpha, k)
+        excerpts = [res[0] for res in results]
+        excerpts = '\n'.join([f'[{i}]. \"{excerpt}\"' for i, excerpt in enumerate(excerpts, start=1)])
+        # first, check if the query is answerable 
+        
+        # set the default language model used to execute guidance programs
+        guidance.llm = guidance.llms.OpenAI("text-davinci-003")
+
+        # define the guidance program
+        moderation_program = guidance(
+        """
+        title of the paper:
+        {{title}}
+        
+        excerpts: 
+        {{excerpts}}
+        ---
+        Given the excerpts from the paper, judge whether you can answer a user query or not.
+
+        Answer in the following format:
+        Query: the question asked by the user 
+        Reasoning: show your reasoning on whether or not you can answer the user query with the excerpts provided
+        Final Answer: either conclude with Yes or No
+        ---
+
+        {{~! place the real question at the end }}
+        Query: {{query}}
+        Reasoning: {{gen "reasoning" stop="\\n"}}
+        Final Answer:{{#select "answer"}}Yes{{or}}No{{/select}}""")
+        out = moderation_program(
+            query=query,
+            title=self.title,
+            excerpts=excerpts
+        )
+        answer = out['answer'].strip()
+        if answer == 'No':
+            answer = "I'm afraid I can't answer your question due to insufficient evidence."
+            answer += f"\nHere is the reason: {out['reasoning']}"
+            return answer
+        else:
+            # proceed to answer
+            prompt = f"""
+            user query:
+            {query}
+            
+            title of the paper:
+            {self.title}
+            
+            excerpts: 
+            {excerpts}
+            ---
+            given the excerpts from the paper above, answer the user query.
+            In your answer, make sure to cite the excerpts by its number wherever appropriate.
+            Note, however, that the excerpts may not be relevant to the user query.
+            """
+            chat_completion = openai.ChatCompletion.create(model="gpt-3.5-turbo",
+                                                        messages=[{"role": "user", "content": prompt}])
+            answer = chat_completion.choices[0].message.content
+            answer += f"\n--- EXCERPTS ---\n{excerpts}"
+            return answer

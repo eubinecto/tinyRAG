@@ -1,10 +1,10 @@
-from rag101.rag_v3 import RagVer3
+from rag101.rag_v3 import RAGVer3
 from pprint import pprint
 from dotenv import load_dotenv
 load_dotenv()
 
 
-rag = RagVer3()
+rag = RAGVer3()
 
 
 # searching for a keyword

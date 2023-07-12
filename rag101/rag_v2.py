@@ -1,10 +1,9 @@
 from tqdm import tqdm
-from unstructured.documents.elements import Title, NarrativeText
-from unstructured.partition.pdf import partition_pdf
-from pathlib import Path
-import spacy
 import weaviate
 import os
+from unstructured.partition.pdf import partition_pdf
+from pathlib import Path
+from .rag_v1 import RAGVer1
 
 # --- upload corpus as a batch --- #
 def check_batch_result(results: dict):
@@ -23,7 +22,7 @@ def check_batch_result(results: dict):
                     print(result["result"])
 
 
-class RagVer2: 
+class RAGVer2(RAGVer1): 
     """
     improving the retriever 🔎:
     semantic search with Approximate Neartest Neighbour (ANN) search
@@ -35,32 +34,9 @@ class RagVer2:
     """
     
     def __init__(self):
-        # build dtm, upsert vectors, etc.
-        elements = partition_pdf(filename=Path(__file__).resolve().parent.parent / "openai27052023.pdf", strategy="auto")
-        paragraphs = ""
-        for el in elements:
-            if isinstance(el, Title):
-                paragraphs += "<TITLE>"
-            if isinstance(el, NarrativeText):
-                el_as_str = str(el).strip()
-                if " " in el_as_str and not el_as_str.startswith("["):
-                    paragraphs += el_as_str
-        paragraphs = [p for p in paragraphs.split("<TITLE>") if p]
-        self.nlp = spacy.load("en_core_web_sm")
-        sentences_by_paragraph: list[list[str]] = [
-            [sent.text for sent in self.nlp(p).sents]
-            for p in paragraphs
-        ]
-        bigrams_by_paragraph: list[list[str]] = [
-            [f"{sentences[i]} {sentences[i+1]}" for i in range(len(sentences)-1)]
-            for sentences in sentences_by_paragraph
-        ]
-        # just flatten it out
-        self.sentences: list[str] = [
-            sent
-            for sentences in bigrams_by_paragraph
-            for sent in sentences
-        ]
+        self.elements = partition_pdf(filename=Path(__file__).resolve().parent.parent / "openai27052023.pdf", strategy="auto")
+        self.extract_sentences()
+        self.extract_title()
         # then ... import sentences into weaviate
         credentials = weaviate.auth.AuthApiKey(os.environ['WEAVIATE_CLUSTER_KEY'])
         self.client = weaviate.Client(

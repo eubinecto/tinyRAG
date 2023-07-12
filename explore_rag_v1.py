@@ -1,8 +1,8 @@
-from rag101.rag_v1 import RagVer1
+from rag101 import RAGVer1
 from pprint import pprint
 
 
-rag = RagVer1()
+rag = RAGVer1()
 
 
 # searching for a keyword
