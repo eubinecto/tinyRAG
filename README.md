@@ -134,6 +134,12 @@ relevant references:
 - reciprocal rank fusion (elastic, 2023) - https://www.elastic.co/guide/en/elasticsearch/reference/current/rrf.html
 - weaviate - hybrid search explained (weaviate, 2023) - https://weaviate.io/blog/hybrid-search-explained 
 
+example (good at keyword search):
+https://github.com/eubinecto/tinyRAG/blob/ece84fbf01e7f0368d61b1203623bd79e5fb3397/main_rag_v3.py#L9-L27
+
+example (not bad at semantic search): 
+https://github.com/eubinecto/tinyRAG/blob/ece84fbf01e7f0368d61b1203623bd79e5fb3397/main_rag_v3.py#L47-L62
+
 
 ## The Reader 📖
 
@@ -142,6 +148,12 @@ relevant references:
 relevant literature:
 - weaviate - stuffing - https://weaviate.io/blog/combining-langchain-and-weaviate
 
+example output (good): 
+https://github.com/eubinecto/tinyRAG/blob/ece84fbf01e7f0368d61b1203623bd79e5fb3397/main_rag_v4.py#L44-L57
+
+
+example output (bad):
+https://github.com/eubinecto/tinyRAG/blob/ece84fbf01e7f0368d61b1203623bd79e5fb3397/main_rag_v4.py#L18-L40
 
 ### `RAGVer5` - moderating answers with Chain-of-Thought & guidance
 
@@ -149,7 +161,10 @@ relevant literature:
 - Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (Wei et al., 2023) - https://arxiv.org/abs/2201.11903
 - A guidance language for controlling large language models (Microsoft, 2023) - https://github.com/microsoft/guidance
 
-example output: 
+example output (good at being tentative when needed): 
+https://github.com/eubinecto/tinyRAG/blob/ece84fbf01e7f0368d61b1203623bd79e5fb3397/main_rag_v5.py#L6-L22
+
+
 
   
 
