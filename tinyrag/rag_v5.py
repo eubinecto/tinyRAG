@@ -22,32 +22,32 @@ class RAGVer5(RAGVer3):
         # define the guidance program
         moderation_program = guidance(
         """
-        title of the paper:
+        ### title of the paper ###:
         {{title}}
         
-        excerpts: 
+        ### excerpts ###: 
         {{excerpts}}
         ---
         Given the excerpts from the paper, judge whether you can answer a user query or not.
 
-        Answer in the following format:
+        Answer in the following format (KEEP YOUR ANSWER SHORT AND CONCISE):
         Query: the question asked by the user 
         Reasoning: show your reasoning on whether or not you can answer the user query with the excerpts provided
         Final Answer: either conclude with Yes or No
         ---
         {{~! place the real question at the end }}
         Query: {{query}}
-        Reasoning: {{gen "reasoning" stop="\\n"}}
+        Reasoning: {{gen "reasoning" stop="\\nF"}}
         Final Answer:{{#select "answer"}}Yes{{or}}No{{/select}}""")
         out = moderation_program(
             query=query,
-            title=self.title,
+            title=self.openai_paper['title'],
             excerpts=excerpts
         )
         answer = out['answer'].strip()
         if answer == 'No':
             answer = "I'm afraid I can't answer your question due to insufficient evidence."
-            answer += f"(Reason: {out['reasoning'].split('.')[0]}"
+            answer += f"(Reason: {out['reasoning'].split('.')[0]})"
             return answer
         else:
             # proceed to answer
@@ -56,7 +56,7 @@ class RAGVer5(RAGVer3):
             {query}
             
             title of the paper:
-            {self.title}
+            {self.openai_paper['title']}
             
             excerpts: 
             {excerpts}

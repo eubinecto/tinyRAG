@@ -1,11 +1,9 @@
 
-from unstructured.documents.elements import Title, NarrativeText
-from unstructured.partition.pdf import partition_pdf
 from pathlib import Path
 import spacy
 from rank_bm25 import BM25Okapi
 import numpy as np
-
+import yaml
 
 class RAGVer1: 
     """
@@ -18,42 +16,12 @@ class RAGVer1:
     """
     
     def __init__(self):
-        self.elements = partition_pdf(filename=Path(__file__).resolve().parent/ "openai27052023.pdf", strategy="auto")
-        self.extract_sentences()
-        self.extract_title()
-        self.bm25 = BM25Okapi([[token.lemma_ for token in self.nlp(sent)] for sent in self.sentences])
-
-    def extract_sentences(self):
-        # build dtm, upsert vectors, etc.
-        paragraphs = ""
-        for el in self.elements:
-            if isinstance(el, Title):
-                paragraphs += "<TITLE>"
-            if isinstance(el, NarrativeText):
-                el_as_str = str(el).strip()
-                if " " in el_as_str and not el_as_str.startswith("["):
-                    paragraphs += el_as_str
-        paragraphs = [p for p in paragraphs.split("<TITLE>") if p]
+        with open(Path(__file__).resolve().parent / "openai27052023.yaml", 'r') as f:
+            self.openai_paper = yaml.safe_load(f)
+        # index BM25
         self.nlp = spacy.load("en_core_web_sm")
-        sentences_by_paragraph: list[list[str]] = [
-            [sent.text for sent in self.nlp(p).sents]
-            for p in paragraphs
-        ]
-        bigrams_by_paragraph: list[list[str]] = [
-            [f"{sentences[i]} {sentences[i+1]}" for i in range(len(sentences)-1)]
-            for sentences in sentences_by_paragraph
-        ]
-        # just flatten it out
-        self.sentences: list[str] = [
-            sent
-            for sentences in bigrams_by_paragraph
-            for sent in sentences
-        ]
+        self.bm25 = BM25Okapi([[token.lemma_ for token in self.nlp(sent)] for sent in self.openai_paper['sentences']])
 
-    def extract_title(self):
-        title_element = [el for el in self.elements if isinstance(el, Title)][0]
-        self.title = str(title_element).strip()
-        
         
     def __call__(self, query: str, k: int = 3) -> list[tuple[str, float]]:
         tokens = [token.lemma_ for token in self.nlp(query)]
@@ -61,7 +29,7 @@ class RAGVer1:
         indices = reversed(np.argsort(sims))  # (, E) -> (, E) ->  (E,) -> list
         sims = sorted(sims, reverse=True) # (1, E) -> (1, E) ->  (E,) -> list
         results = [
-           (self.sentences[i], s)
+           (self.openai_paper['sentences'][i], s)
            for i, s in zip(indices, sims)
         ]
         top_k: list[tuple[str, float]] = results[:k]

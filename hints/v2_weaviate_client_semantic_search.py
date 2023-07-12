@@ -1,3 +1,4 @@
+from tqdm import tqdm
 import weaviate
 from dotenv import load_dotenv
 import os
@@ -15,10 +16,6 @@ print(client.is_ready())
 """
 True
 """
-
-# ---first, flush the cluster --- #
-client.schema.delete_all()
-
 
 # --- create a schema --- #
 class_obj = {
@@ -40,7 +37,10 @@ class_obj = {
     "vectorizer": "text2vec-openai"
 }
 
-print(client.schema.create_class(class_obj))
+
+if not client.schema.contains(class_obj):
+    print(client.schema.create_class(class_obj))
+
 
 
 sentences = ['As such, they have been the subject of substantial interest and progress in '
@@ -74,10 +74,33 @@ def check_batch_result(results: dict):
   """
 
   if results is not None:
-    for result in results:
+    for result in tqdm(results):
       if "result" in result and "errors" in result["result"]:
         if "error" in result["result"]["errors"]:
           print(result["result"])
+
+
+
+r = (
+   client
+   .query
+   .get("Sentence", ['content'])
+   .with_where(
+      {
+         'operator': 'Or', 
+        'operands': [{
+           'path': ['content'],
+           'operator': 'Equal',
+           'valueString': sent        
+        } for sent in sentences]
+      }
+   ).do()
+)
+
+sentences = [
+   sent
+   for sent  in sentences if sent not in [item['content'] for item in r['data']['Get']['Sentence']]
+]
 
 with client.batch(
     batch_size=3,               # Specify batch size
@@ -88,6 +111,7 @@ with client.batch(
     callback=check_batch_result,
 ) as batch:
     for sent in sentences:
+        # import data only if it has not been imported before
         batch.add_data_object(
             {'content': sent},
             class_name="Sentence"

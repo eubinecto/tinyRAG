@@ -16,8 +16,6 @@ print(client.is_ready())
 True
 """
 
-# ---first, flush the cluster --- #
-client.schema.delete_all()
 
 
 # --- create a schema --- #
@@ -40,7 +38,8 @@ class_obj = {
     "vectorizer": "text2vec-openai"
 }
 
-print(client.schema.create_class(class_obj))
+if not client.schema.contains(class_obj):
+    print(client.schema.create_class(class_obj))
 
 
 sentences = ['As such, they have been the subject of substantial interest and progress in '

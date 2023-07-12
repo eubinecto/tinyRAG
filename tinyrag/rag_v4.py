@@ -9,6 +9,7 @@ class RAGVer4(RAGVer3):
     - Stuffiing (Weaviate, 2023): https://weaviate.io/blog/combining-langchain-and-weaviate
     """
 
+
     def __call__(self, query: str, alpha: float = 0.4, k: int = 3) -> str:
         results: list[tuple[str, float]] = super().__call__(query, alpha, k)
         # with this, generate an answer 
@@ -19,7 +20,7 @@ class RAGVer4(RAGVer3):
         {query}
         
         title of the paper:
-        {self.title}
+        {self.openai_paper['title']}
         
         excerpts: 
         {excerpts}

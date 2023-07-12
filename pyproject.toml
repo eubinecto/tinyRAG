@@ -13,7 +13,10 @@ rank-bm25 = "^0.2.2"
 weaviate-client = "^3.22.1"
 unstructured = {extras = ["local-inference"], version = "^0.8.1"}
 poppler-utils = "^0.1.0"
+pyyaml = "^6.0"
 
+
+[tool.poetry.group.dev.dependencies]
 
 [build-system]
 requires = ["poetry-core"]

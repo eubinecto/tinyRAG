@@ -27,36 +27,69 @@ It is my attempt to reverse-engineer popular RAG systems, e.g. Perplexity AI, Bi
 
 ## Quick Start 🚀
 
-
+weaviate -> create your cluster. 
+weaviate & openai key ->  put them under your `.env`
+...
+and then ... just install it as a library for now
 
 
 ## The Retriever 🔎
 
 ### `RAGVer1` - searching for keywords with BM25 scoring
 
-...
+(just put references here)
+- BM25 
+- ...
+- ...
+
+pros: 
+(explain with examples)
+
+cons:
+(explain with examples)
 
 
 ### `RAGVer2` - searching for meaning with ANN (Approximate Nearest Neighbor)
+ 
+- semantic search - why is this good? 
 
-...
+
+pros: 
+(explain with examples)
+
+
+cons:
+(explain with examples)
 
 
 ### `RAGVer3` - brining the best of both worlds - hybrid search with RRF (Reciprocal Rank Fusion)
 
-...
+- reciprocal rank fusion
+- weaviate - hybrid search
 
 
 ## The Reader 📖
 
 ### `RAGVer4` - generating answers with stuffing
 
+- weaviate - stuffing 
 
-...
+pros: 
+(explain with examples)
+
+
+cons: 
+(explain with examples)
+
 
 ### `RAGVer5` - moderating answers with Chain-of-Thought & guidance
 
+- (chain-of-thought)
+- guidance
+  
+pros: 
+(explain with examples)
 
-... 
-
+cons:
+(explain with examples)
 

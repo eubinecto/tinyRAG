@@ -1,9 +1,9 @@
 from tqdm import tqdm
 import weaviate
 import os
-from unstructured.partition.pdf import partition_pdf
 from pathlib import Path
 from .rag_v1 import RAGVer1
+import yaml
 
 # --- upload corpus as a batch --- #
 def check_batch_result(results: dict):
@@ -16,7 +16,7 @@ def check_batch_result(results: dict):
         The Weaviate batch creation return value.
     """
     if results is not None:
-        for result in tqdm(results):
+        for result in results:
             if "result" in result and "errors" in result["result"]:
                 if "error" in result["result"]["errors"]:
                     print(result["result"])
@@ -34,9 +34,8 @@ class RAGVer2(RAGVer1):
     """
     
     def __init__(self):
-        self.elements = partition_pdf(filename=Path(__file__).resolve().parent / "openai27052023.pdf", strategy="auto")
-        self.extract_sentences()
-        self.extract_title()
+        with open(Path(__file__).resolve().parent / "openai27052023.yaml", 'r') as f:
+            self.openai_paper = yaml.safe_load(f)
         # then ... import sentences into weaviate
         credentials = weaviate.auth.AuthApiKey(os.environ['WEAVIATE_CLUSTER_KEY'])
         self.client = weaviate.Client(
@@ -46,9 +45,8 @@ class RAGVer2(RAGVer1):
                             'X-OpenAI-Api-Key': os.environ['OPENAI_API_KEY']
                        }
         )
-        # on init, just flush all schema 
-        self.client.schema.delete_all()
         # then create a new one
+        self.client.schema.delete_all()
         class_obj = {
             "class": "Sentence",
             "moduleConfig": {
@@ -68,19 +66,20 @@ class RAGVer2(RAGVer1):
             "vectorizer": "text2vec-openai"
         }
         self.client.schema.create_class(class_obj)
+
         with self.client.batch(
-            batch_size=3,               # Specify batch size
+            batch_size=100,               # Specify batch size
             num_workers=4,             # Parallelize the process
             dynamic=True,                        # Enable/Disable dynamic batch size change
             timeout_retries=3,           # Number of retries if a timeout occurs
             connection_error_retries=3,  # Number of retries if a connection error occurs
             callback=check_batch_result,
         ) as batch:
-            for sent in self.sentences:
+            for sent in tqdm(self.openai_paper['sentences']):
                 batch.add_data_object(
                     {'content': sent},
                     class_name="Sentence"
-                )
+            )
         
         
     
