@@ -102,7 +102,12 @@ relevant references:
 - rank_bm25 - A Collection of BM25 Algorithms in Python (Dorianbrown): https://github.com/dorianbrown/rank_bm25
 - Improved Text Scoring with BM25 (Weber from Elastic, 2016) - https://velog.io/@mayhan/Elasticsearch-유사도-알고리즘
 
-exmaple output:
+
+example output (good):
+https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v1.py#L8-L31
+
+example output (bad):
+https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v1.py#L33-L50
 
 
 
@@ -114,26 +119,6 @@ relevant references:
 - text2vec-openai (Weaviate, 2023): https://weaviate.io/developers/weaviate/modules/retriever-vectorizer-modules/text2vec-openai
 - (Batch) Import items (Weaviate, 2023): https://weaviate.io/developers/weaviate/manage-data/import
 
-example output
-
-### `RAGVer3` - brining the best of both worlds - hybrid search with RRF (Reciprocal Rank Fusion)
-
-relevant references:
-- reciprocal rank fusion (elastic, 2023) - https://www.elastic.co/guide/en/elasticsearch/reference/current/rrf.html
-- weaviate - hybrid search explained (weaviate, 2023) - https://weaviate.io/blog/hybrid-search-explained 
-
-example output (good):
-https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v1.py#L8-L31
-
-example output (bad):
-https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v1.py#L33-L50
-
-## The Reader 📖
-
-### `RAGVer4` - generating answers with stuffing
-
-relevant literature:
-- weaviate - stuffing - https://weaviate.io/blog/combining-langchain-and-weaviate
 
 example output (good): 
 https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v2.py#L41-L58
@@ -141,6 +126,21 @@ https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6
 
 example output (bad): 
 https://github.com/eubinecto/tinyRAG/blob/37a695ee8dc652e79a72eab89da3146ce285d6c1/main_rag_v2.py#L9-L23
+
+
+### `RAGVer3` - brining the best of both worlds - hybrid search with RRF (Reciprocal Rank Fusion)
+
+relevant references:
+- reciprocal rank fusion (elastic, 2023) - https://www.elastic.co/guide/en/elasticsearch/reference/current/rrf.html
+- weaviate - hybrid search explained (weaviate, 2023) - https://weaviate.io/blog/hybrid-search-explained 
+
+
+## The Reader 📖
+
+### `RAGVer4` - generating answers with stuffing
+
+relevant literature:
+- weaviate - stuffing - https://weaviate.io/blog/combining-langchain-and-weaviate
 
 
 ### `RAGVer5` - moderating answers with Chain-of-Thought & guidance
