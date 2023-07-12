@@ -54,15 +54,15 @@ Now go create your own `weaviate` cluster.  Visit [Weaviate Cloud Services](http
 
 Press "Details", and take a note of two credentials: "Cluster URL" & and your Cluster API Key.  
 
-Write them in a `.env` file, along with your [OpenAI Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/), and put them under the root directory. `.env` file should be put in the following format: 
+Type them in a `.env` file, along with your [OpenAI Key](https://www.howtogeek.com/885918/how-to-get-an-openai-api-key/), and put them under the root directory. Keep your`.env` in the following format: 
 
-```
+```env
 WEAVIATE_CLUSTER_KEY=<your cluster api key>
 WEAVIATE_CLUSTER_URL=<your cluster url>
 OPENAI_API_KEY=<your openai api key>
 ```
 
-That's it for logistics. Now you can try asking a question on GPT4 like so:
+That's it for logistics. Now you can try asking questions like so:
 
 ```python
 from tinyrag.rag_v5 import RAGVer5
@@ -98,46 +98,28 @@ This suggests that while GPT-4 may demonstrate near-human intelligence in specif
 ## The Retriever 🔎
 
 ### `RAGVer1` - searching for keywords with BM25 scoring
-
 - rank_bm25 - A Collection of BM25 Algorithms in Python (Dorianbrown): https://github.com/dorianbrown/rank_bm25
 - Improved Text Scoring with BM25 (Weber from Elastic, 2016) - https://velog.io/@mayhan/Elasticsearch-유사도-알고리즘
 
-### `RAGVer2` - searching for meaning with ANN (Approximate Nearest Neighbor)
- 
+### `RAGVer2` - searching for meaning with ANN (Approximate Nearest Neighbor) 
 - Vector Indexing (Weaviate, 2023): https://weaviate.io/developers/weaviate/concepts/vector-index
 - Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs (Malkov & Yashunin, 2018): https://arxiv.org/abs/1603.09320
 - text2vec-openai (Weaviate, 2023): https://weaviate.io/developers/weaviate/modules/retriever-vectorizer-modules/text2vec-openai
 - (Batch) Import items (Weaviate, 2023): https://weaviate.io/developers/weaviate/manage-data/import
 
-
 ### `RAGVer3` - brining the best of both worlds - hybrid search with RRF (Reciprocal Rank Fusion)
 
-- reciprocal rank fusion
-- weaviate - hybrid search
-
+- reciprocal rank fusion (elastic, 2023) - https://www.elastic.co/guide/en/elasticsearch/reference/current/rrf.html
+- weaviate - hybrid search explained (weaviate, 2023) - https://weaviate.io/blog/hybrid-search-explained
 
 ## The Reader 📖
 
 ### `RAGVer4` - generating answers with stuffing
 
-- weaviate - stuffing 
-
-pros: 
-(explain with examples)
-
-
-cons: 
-(explain with examples)
-
+- weaviate - stuffing - https://weaviate.io/blog/combining-langchain-and-weaviate
 
 ### `RAGVer5` - moderating answers with Chain-of-Thought & guidance
-
-- (chain-of-thought)
-- guidance
+- Chain-of-Thought Prompting Elicits Reasoning in Large Language Models (Wei et al., 2023) - https://arxiv.org/abs/2201.11903
+- A guidance language for controlling large language models (Microsoft, 2023) - https://github.com/microsoft/guidance
   
-pros: 
-(explain with examples)
-
-cons:
-(explain with examples)
 
