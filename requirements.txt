@@ -2,3 +2,8 @@ guidance==0.0.64
 numpy==1.25.1
 rank_bm25==0.2.2
 weaviate-client==3.22.1
+unstructured[local-inference]==0.8.1
+spacy==3.6.0
+en-core-web-sm==3.6.0
+poppler-utils==0.1.0
+python-dotenv==1.0.0
