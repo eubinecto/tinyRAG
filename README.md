@@ -7,7 +7,7 @@ A minimal implementation of a retriever-augmented generation (RAG) system.
 
 `tinyrag` answers any questions on *GPT Technical Report* (OpenAI, 2023) with in-text citations | 
 --- | 
-![image](https://github.com/eubinecto/tinyRAG/assets/56193069/94f2f915-8cb8-45e6-aeba-226c0bd44d55) | 
+<img width="1120" alt="image" src="https://github.com/eubinecto/tinyRAG/assets/56193069/e26c4030-23ae-44a4-93f5-55641a04da7a"> | 
 
 like so:
 ```python
