@@ -40,14 +40,19 @@ curl -sSL https://install.python-poetry.org | python3 -
 ```
 
 Clone the project: 
-```
+```bash
 git clone https://github.com/eubinecto/tinyRAG.git
 ```
 
 Install dependencies:
-```
+```bash
 cd tinyrag
 poetry install
+```
+
+Install spacy tokenizer:
+```bash
+python3 -m spacy download en_core_web_sm
 ```
 
 Now go create your own `weaviate` cluster.  Visit [Weaviate Cloud Services](https://weaviate.io/pricing), login to the console, Create a cluster ("Free Sandbox" should be free for 14days). 

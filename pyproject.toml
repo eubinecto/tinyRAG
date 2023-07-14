@@ -14,9 +14,9 @@ weaviate-client = "^3.22.1"
 unstructured = {extras = ["local-inference"], version = "^0.8.1"}
 poppler-utils = "^0.1.0"
 pyyaml = "^6.0"
+python-dotenv = "^1.0.0"
+spacy = "^3.6.0"
 
-
-[tool.poetry.group.dev.dependencies]
 
 [build-system]
 requires = ["poetry-core"]
